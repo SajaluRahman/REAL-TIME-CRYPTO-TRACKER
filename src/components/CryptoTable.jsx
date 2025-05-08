@@ -229,7 +229,7 @@ export default function CryptoTable() {
                   <img
                     src={asset.logo || "/placeholder-logo.png"}
                     alt={`${asset.name} logo`}
-                    className="w-12 h-12 Rounded-full border-2 border-blue-500/50"
+                    className="w-12 h-12 rounded-full border-2 border-blue-500/50"
                   />
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">{asset.name}</h3>

@@ -1,16 +1,24 @@
 import { useParams, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { selectCryptoAssets } from "../features/crypto/cryptoSelectors";
+import { selectCryptoAssets, selectCryptoLoading } from "../features/crypto/cryptoSelectors";
 import { formatNumber } from "../utils/formatters";
 import PercentageChange from "../components/PercentageChange";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import Loader from "../components/Loader";
+import { useEffect } from "react";
 
 export default function AssetDetails() {
   const { symbol } = useParams();
   const assets = useSelector(selectCryptoAssets);
-  const loading = useSelector((state) => state.crypto.loading);
-  const asset = assets.find((item) => item.symbol === symbol.toUpperCase());
+  const loading = useSelector(selectCryptoLoading);
+  const asset = assets && assets.find((item) => item.symbol === symbol.toUpperCase());
+
+  // Debug logging for chartData
+  useEffect(() => {
+    if (asset) {
+      console.log(`AssetDetails: ${asset.symbol} chartData=`, asset.chartData);
+    }
+  }, [asset]);
 
   // Fallback chart data
   const defaultChartData = [
@@ -71,7 +79,7 @@ export default function AssetDetails() {
                 type="monotone"
                 dataKey="price"
                 stroke="#3b82f6"
-                activeDot={{ r: 8 }}
+                activeDot={{ r: 7 }}
               />
             </LineChart>
           </ResponsiveContainer>
